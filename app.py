@@ -1,36 +1,28 @@
-
 import streamlit as st
-import pandas as pd
 import os
-import Factorial  # Import module Factorial
+import importlib.util
 
+# 🏆 Tiêu đề trang web
+st.title("Bộ sưu tập bài tập 🎯")
 
-# 🔥 Sidebar chọn bài tập
-st.sidebar.header("📚 Chọn bài tập:")
-exercise_options = ["Factorial Calculator"]  # Danh sách bài tập mặc định
+# 🗂 Lấy danh sách các bài tập từ thư mục "exercises"
+exercise_files = [f for f in os.listdir("exercises") if f.endswith(".py")]
+exercise_names = [f.replace(".py", "") for f in exercise_files]
 
-# 🔍 Tự động tìm các bài tập trong thư mục exercises
-if os.path.exists("exercises"):
-    exercise_files = [f for f in os.listdir("exercises") if f.endswith(".py")]
-    exercise_options.extend(exercise_files)
+# 🎛 Tạo menu sidebar để chọn bài tập
+selected_exercise = st.sidebar.selectbox("Chọn bài tập", exercise_names)
 
-# 🛠 Hiển thị danh sách chọn bài tập
-selected_exercise = st.sidebar.selectbox("Chọn bài tập:", exercise_options)
+# 📌 Load và chạy bài tập khi chọn
+if selected_exercise:
+    file_path = f"exercises/{selected_exercise}.py"
 
-# 📌 Hiển thị nội dung của bài tập được chọn
-def factorial_calculator():
-    """Giao diện tính giai thừa."""
-    st.header("🧮 Factorial Calculator")
-    number = st.number_input("Nhập số:", min_value=0, max_value=100, value=0, step=1)
-    if st.button("Tính giai thừa"):
-        result = Factorial.factorial(number)
-        st.success(f"{number}! = {result}")
-        st.balloons()
+    # Load module bài tập
+    spec = importlib.util.spec_from_file_location(selected_exercise, file_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
 
-# 🏃‍♂️ Chạy bài tập được chọn
-if selected_exercise == "Factorial Calculator":
-    factorial_calculator()
-else:
-    st.sidebar.write(f"🔄 Đang chạy `{selected_exercise}`...")
-    exec(open(f"exercises/{selected_exercise}").read())
-
+    # Gọi hàm `main()` của bài tập
+    if hasattr(module, "main"):
+        module.main()
+    else:
+        st.error(f"Bài tập {selected_exercise} không có hàm main()!")
