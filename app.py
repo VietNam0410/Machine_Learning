@@ -1,47 +1,9 @@
-# import streamlit as st
-# import pandas as pd
-# # import mlflow
-# # import mlflow.sklearn
-# # import joblib
-# # import matplotlib.pyplot as plt
-# # import seaborn as sns
-# # from sklearn.model_selection import train_test_split, cross_val_score
-# # from sklearn.ensemble import RandomForestClassifier
-# # from sklearn.metrics import accuracy_score
-# #Factorial
-
-# import Factorial # Import module đầy đủ
-# import os
-
-# # Tiêu đề trang web
-# st.title("Bộ sưu tập bài tập 🎯")
-
-# #
-# def main():
-#     st.title("Factorial Calculator")
-#     number = st.number_input("Enter a number", min_value=0, max_value=100, value=0)
-#     if st.button("Calculate"):
-#         result = Factorial.factorial(number)
-#         st.write(f"Factorial of {number} is {result}")
-#         st.balloons()
-# #Hiển thị nội dung của bài tập được chọn
-
-# if __name__ == "__main__":
-#     main()
 
 import streamlit as st
 import pandas as pd
 import os
 import Factorial  # Import module Factorial
 
-# import mlflow
-# import mlflow.sklearn
-# import joblib
-# import matplotlib.pyplot as plt
-# import seaborn as sns
-# from sklearn.model_selection import train_test_split, cross_val_score
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import accuracy_score
 
 # 🔥 Sidebar chọn bài tập
 st.sidebar.header("📚 Chọn bài tập:")
